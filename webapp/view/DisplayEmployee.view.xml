@@ -1,0 +1,100 @@
+<mvc:View xmlns:m="sap.m"
+    controllerName="employeemgmt.controller.DisplayEmployee"
+    xmlns:mvc="sap.ui.core.mvc"
+    displayBlock="true"
+    xmlns="sap.uxap"
+    xmlns:core="sap.ui.core"
+    xmlns:semantic="sap.f.semantic"
+	xmlns:form="sap.ui.layout.form"
+	xmlns:l="sap.ui.layout"
+	xmlns:upload="sap.m.upload">
+
+	<ObjectPageLayout 
+		id="ObjectPageLayout"
+		enableLazyLoading="true"
+		beforeNavigate="onBeforeNavigate"
+		useIconTabBar="true"
+		showTitleInHeaderContent="true"
+		upperCaseAnchorBar="false"
+		sectionChange="onSectionChange">
+			<headerTitle>
+				<ObjectPageDynamicHeaderTitle>
+					<expandedHeading>
+						<m:Avatar src="{EmployeeModel>/detailPageData/IMG_STR}" displaySize="XL" class="sapUiTinyMarginEnd"/>
+					</expandedHeading>
+					<actions>
+						<m:Button icon="sap-icon://edit" press="onEditPress" visible="{=${EmployeeModel>/bDisplay} ? true : false}"/>
+						<m:Button icon="sap-icon://save" press="onSavepress" visible="{=${EmployeeModel>/bEdit} ? true : false}"/>
+					</actions>
+				</ObjectPageDynamicHeaderTitle>
+			</headerTitle>
+			<headerContent>
+				<m:Title titleStyle="H3" text="{EmployeeModel>/detailPageData/EMP_NAME}" wrapping="true"/>
+				<m:VBox >
+				    <m:Label text="Hello! I am {EmployeeModel>/detailPageData/EMP_NAME} and I use CAMP"/> 
+				</m:VBox>
+			</headerContent>
+
+			<sections>
+				<ObjectPageSection titleUppercase="false">
+					<subSections>
+						<ObjectPageSubSection title="Employee Information" titleUppercase="false">
+							<blocks>
+								<form:SimpleForm >
+									<m:HBox>
+										<m:VBox width="50%" class="sapUiTinyMarginBegin">
+											<m:Label text="Name"/>
+											<m:Text text="{EmployeeModel>/detailPageData/EMP_NAME}" visible="{=${EmployeeModel>/bDisplay} ? true : false}" class="sapUiSmallMarginBottom"/>
+											<m:Input value="{EmployeeModel>/SelectedEmployeeToUpdate/EMP_NAME}" visible="{=${EmployeeModel>/bEdit} ? true : false}" class="sapUiSmallMarginBottom"/>
+											<m:Label text="Email"/>
+											<m:Text text="{EmployeeModel>/detailPageData/EMP_EMAIL}" visible="{=${EmployeeModel>/bDisplay} ? true : false}" class="sapUiSmallMarginBottom"/>
+											<m:Input value="{EmployeeModel>/SelectedEmployeeToUpdate/EMP_EMAIL}" visible="{=${EmployeeModel>/bEdit} ? true : false}" class="sapUiSmallMarginBottom"/>
+										</m:VBox>
+										<m:VBox width="50%" class="sapUiLargeMarginBegin">
+											<m:Label text="Salary"/>
+											<m:Text text="{EmployeeModel>/detailPageData/EMP_SALARY}" visible="{=${EmployeeModel>/bDisplay} ? true : false}" class="sapUiSmallMarginBottom"/>
+											<m:Input value="{EmployeeModel>/SelectedEmployeeToUpdate/EMP_SALARY}" visible="{=${EmployeeModel>/bEdit} ? true : false}" class="sapUiSmallMarginBottom"/>
+											<m:Label text="Experiance"/>
+											<m:Text text="{EmployeeModel>/detailPageData/EMP_EXPERIANCE}" visible="{=${EmployeeModel>/bDisplay} ? true : false}" class="sapUiSmallMarginBottom"/>
+											<m:Input value="{EmployeeModel>/SelectedEmployeeToUpdate/EMP_EXPERIANCE}" visible="{=${EmployeeModel>/bEdit} ? true : false}" class="sapUiSmallMarginBottom"/>
+										</m:VBox>
+									</m:HBox>      
+            					</form:SimpleForm>
+							</blocks>
+						</ObjectPageSubSection>
+
+						<ObjectPageSubSection title="Resume (CV)" titleUppercase="false">
+							<blocks>
+								<upload:UploadSet
+								id="UploadSet"
+								instantUpload="true"
+								showIcons="true"
+								terminationEnabled="true"
+								beforeUploadStarts="onBeforeCVUploadStarts"
+								fileTypes="txt,doc,png,pdf"
+								maxFileNameLength="30"
+								maxFileSize="200"
+								mediaTypes="text/plain,application/msword,image/png,application/pdf"
+								mode="SingleSelectMaster"
+								items="{EmployeeModel>/CV/}"
+					    		afterItemRemoved="onAfterItemRemoved">
+								<upload:items>
+									<upload:UploadSetItem
+											fileName="{EmployeeModel>FILE/FILE_NAME}"
+											url="{EmployeeModel>FILE/URL}"
+											mediaType="{EmployeeModel>FILE/MEDIA_TYPE}">										
+									</upload:UploadSetItem>
+								</upload:items>
+							</upload:UploadSet>
+							</blocks>
+						</ObjectPageSubSection>
+					</subSections>
+				</ObjectPageSection>
+
+				<!-- <ObjectPageSection titleUppercase="false" id="empCV" title="Resume (CV)">
+					<subSections>
+					</subSections>
+				</ObjectPageSection> -->
+			</sections>
+		</ObjectPageLayout>
+</mvc:View>

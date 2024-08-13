@@ -1,0 +1,38 @@
+<mvc:View controllerName="employeemgmt.controller.EmployeeMgmt"
+    xmlns:mvc="sap.ui.core.mvc" displayBlock="true"
+    xmlns="sap.m">
+    <Page id="page" title="{i18n>title}" showHeader="false">
+         <content>
+            <Table id="employeesTable" class="sapUiResponsiveContentPadding" items="{EmployeeModel>/TableItems}" mode="MultiSelect" selectionChange="onSelectedRecord" updateFinished="onUpdateFinish">
+               <headerToolbar>
+                    <OverflowToolbar >
+                      <Title text="Employee(0)"></Title>
+					  <ToolbarSpacer/>
+					  <Button text="Create" icon="sap-icon://add" press="openCreateEmployeeDialog"/>
+					  <Button text="Delete" icon="sap-icon://delete" press="onDeletePress"/>
+                    </OverflowToolbar>
+               </headerToolbar>
+               <columns>
+                   <Column >
+                      <Label text="Employee Id"/>
+                   </Column>
+                   <Column >                      
+                      <Label text="Name"/>
+                   </Column>
+                   <Column >                      
+                       <Label text="Email"/>
+                   </Column>
+               </columns>               
+               <items>
+					<ColumnListItem type="Active" navigated="true" press="onEmployeeListItemPress">
+						<cells>
+							<Text text="{EmployeeModel>EMP_ID}"/>
+							<Text text="{EmployeeModel>EMP_NAME}"/>
+							<Text text="{EmployeeModel>EMP_EMAIL}"/>
+						</cells>
+				    </ColumnListItem>
+				</items>
+            </Table>
+        </content>
+    </Page>
+</mvc:View>
